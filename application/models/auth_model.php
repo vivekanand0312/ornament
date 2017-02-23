@@ -1,12 +1,32 @@
 <?php
-
+/**
+ * Auth_model
+ * 
+ * @package   
+ * @author Vivekanand
+ * @copyright ornament
+ * @version 2016
+ * @access public
+ */
 class Auth_model extends CI_Model
 {
     
+    /**
+     * Auth_model::__construct()
+     * 
+     * @return
+     */
     function __construct() {
         parent::__construct();
     }
     
+    /**
+     * Auth_model::auth()
+     * 
+     * @param mixed $name
+     * @param mixed $password
+     * @return
+     */
     function auth($name,$password){
         $password = sha1($password);
         $this->db->where('user_name',$name);
@@ -28,6 +48,7 @@ class Auth_model extends CI_Model
             return FALSE;
       }
         
-    }
-    
+    }   
 }
+/* End of file auth_model.php */
+/* Location: ./application/models/auth_model.php */

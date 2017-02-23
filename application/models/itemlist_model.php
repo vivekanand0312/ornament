@@ -1,12 +1,32 @@
 <?php
-
+/**
+ * Itemlist_model
+ * 
+ * @package   
+ * @author Vivekanand
+ * @copyright ornament
+ * @version 2016
+ * @access public
+ */
 class Itemlist_model extends CI_Model
 {
     
+    /**
+     * Itemlist_model::__construct()
+     * 
+     * @return
+     */
     function __construct() {
         parent::__construct();
     }
     
+    /**
+     * Itemlist_model::add_item()
+     * 
+     * @param mixed $item
+     * @param mixed $comment
+     * @return
+     */
     function add_item($item, $comment){
         $created = date("Y/m/d");
         $this->db->set('item', $item);
@@ -26,6 +46,12 @@ class Itemlist_model extends CI_Model
         }
     }
     
+    /**
+     * Itemlist_model::delete_item()
+     * 
+     * @param mixed $id
+     * @return
+     */
     function delete_item($id){
         if($this->session->userdata('role') == 'admin'){
             if($this->db->delete('item',  array('id'=>$id))){
@@ -50,10 +76,24 @@ class Itemlist_model extends CI_Model
         }
     }
     
+    /**
+     * Itemlist_model::load_edit_view()
+     * 
+     * @param mixed $id
+     * @return
+     */
     function load_edit_view($id){
        $data['query'] =   $this->db->query("SELECT * FROM item where id = '$id' ");
     }
             
+    /**
+     * Itemlist_model::do_edit()
+     * 
+     * @param mixed $comment
+     * @param mixed $item
+     * @param mixed $id
+     * @return
+     */
     function do_edit($comment, $item, $id){
         $data = array(
                'item' => $item,
@@ -77,12 +117,20 @@ class Itemlist_model extends CI_Model
         }
    }
    
+    /**
+     * Itemlist_model::addHistory()
+     * 
+     * @param mixed $item_id
+     * @param mixed $created
+     * @return
+     */
     function addHistory($item_id, $created){
        $this->db->set('item_id', $item_id);
        $this->db->set('weight', 0);
        $this->db->set('quantity', 0);
        $this->db->set('created', $created);
        $this->db->insert('report');
-   }
-    
+   }    
 }
+/* End of file itemlist_model.php */
+/* Location: ./application/models/itemlist_model.php */

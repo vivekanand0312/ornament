@@ -1,12 +1,37 @@
 <?php
 
+/**
+ * Dashbord_model
+ * 
+ * @package   
+ * @author Vivekanand
+ * @copyright ornament
+ * @version 2016
+ * @access public
+ */
 class Dashbord_model extends CI_Model
 {
     
+   /**
+    * Dashbord_model::__construct()
+    * 
+    * @return
+    */
    function __construct() {
         parent::__construct();
     }
     
+   /**
+    * Dashbord_model::add_transaction()
+    * 
+    * @param mixed $item
+    * @param mixed $weight
+    * @param mixed $nug
+    * @param mixed $transaction_type
+    * @param mixed $date
+    * @param mixed $comment
+    * @return
+    */
    function add_transaction($item, $weight, $nug, $transaction_type, $date, $comment){
         $total_weight = ($weight * $nug);
         $transaction = array('item_id'=>$item,
@@ -31,6 +56,12 @@ class Dashbord_model extends CI_Model
        }
     }
     
+   /**
+    * Dashbord_model::delete_post()
+    * 
+    * @param mixed $id
+    * @return
+    */
    function delete_post($id){
        if($this->session->userdata('role') == 'admin'){
             $this->db->delete('transaction',  array('id'=>$id));
@@ -42,6 +73,18 @@ class Dashbord_model extends CI_Model
         }
         
     
+   /**
+    * Dashbord_model::do_edit()
+    * 
+    * @param mixed $item
+    * @param mixed $weight
+    * @param mixed $nug
+    * @param mixed $transaction_type
+    * @param mixed $date
+    * @param mixed $comment
+    * @param mixed $id
+    * @return
+    */
    function do_edit($item, $weight, $nug, $transaction_type, $date, $comment, $id){
         $data = array(
                'item_id' => $item,
@@ -62,6 +105,12 @@ class Dashbord_model extends CI_Model
         }
    }
    
+   /**
+    * Dashbord_model::searchItem()
+    * 
+    * @param mixed $item
+    * @return
+    */
    function searchItem($item){
        $item = trim($item);
        $sql = "SELECT item.item, item.id as itemID, transaction.id, transaction.weight, transaction.nug, transaction.transaction_type, transaction.comment, transaction.created from item RIGHT JOIN transaction ON transaction.item_id = item.id WHERE transaction.item_id = $item";        
@@ -87,6 +136,13 @@ class Dashbord_model extends CI_Model
        
    }
    
+   /**
+    * Dashbord_model::searchAdvance()
+    * 
+    * @param mixed $from
+    * @param mixed $to
+    * @return
+    */
    function searchAdvance($from , $to){
        $form = trim($from);
        $to = trim($to);
@@ -114,6 +170,16 @@ class Dashbord_model extends CI_Model
        }
    }
 //   update transction history every time
+   /**
+    * Dashbord_model::updateReport()
+    * 
+    * @param mixed $item
+    * @param mixed $weight
+    * @param mixed $quantity
+    * @param mixed $type
+    * @param mixed $date
+    * @return
+    */
    public function updateReport($item, $weight, $quantity, $type, $date){
        
         $get_histoty =  $this->db->get_where('report', array('item_id'=>$item),1);
@@ -153,6 +219,11 @@ class Dashbord_model extends CI_Model
        exit;
    }
    
+   /**
+    * Dashbord_model::createUser()
+    * 
+    * @return
+    */
    function createUser(){
         $name = $this->input->post('name');
         $email = $this->input->post('email');
@@ -174,6 +245,6 @@ class Dashbord_model extends CI_Model
         else{
             return FALSE;}
    }
-    
-   
 }
+/* End of file dashbord_model.php */
+/* Location: ./application/models/dashbord_model.php */

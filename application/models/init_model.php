@@ -1,17 +1,40 @@
 <?php
-
+/**
+ * Init_model
+ * 
+ * @package   
+ * @author Vivekanand
+ * @copyright ornament
+ * @version 2016
+ * @access public
+ */
 class Init_model extends CI_Model
 {
     
+    /**
+     * Init_model::__construct()
+     * 
+     * @return
+     */
     function __construct() {
         parent::__construct();
         $this->index();
     }
     
+    /**
+     * Init_model::index()
+     * 
+     * @return
+     */
     function index(){
 //        $this->init();
     }
     
+    /**
+     * Init_model::init()
+     * 
+     * @return
+     */
     function init(){
 //        $query = 'SELECT item.id as itemID, item.item, transaction.comment, transaction.created';        
 //        $this->db->from('item');
@@ -27,11 +50,17 @@ class Init_model extends CI_Model
         return $query;
     }
     
+    /**
+     * Init_model::listItem()
+     * 
+     * @return
+     */
     function listItem(){
         $this->db->order_by("item"); 
         $query = $this->db->get('item');
         
         return $query;
-    }
-    
+    }   
 }
+/* End of file init_model.php */
+/* Location: ./application/models/init_model.php */

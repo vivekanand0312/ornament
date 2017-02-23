@@ -1,12 +1,30 @@
 <?php
-
+/**
+ * Blog_model
+ * 
+ * @package   
+ * @author Vivekanand
+ * @copyright ornament
+ * @version 2016
+ * @access public
+ */
 class Blog_model extends CI_Model
 {
     
+    /**
+     * Blog_model::__construct()
+     * 
+     * @return
+     */
     function __construct() {
         parent::__construct();
     }
     
+    /**
+     * Blog_model::register_user()
+     * 
+     * @return
+     */
     function register_user($name, $email, $password, $created)
     {
         $password = sha1($password);
@@ -23,6 +41,6 @@ class Blog_model extends CI_Model
         }
         
     }
-    
-    
 }
+/* End of file blog_model.php */
+/* Location: ./application/models/blog_model.php */
