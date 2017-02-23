@@ -1,7 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * Init
+ * 
+ * @package   
+ * @author Vivekanand
+ * @copyright ornament
+ * @version 2016
+ * @access public
+ */
 class Init extends CI_Controller {
     
+    /**
+     * Init::__construct()
+     * 
+     * @return
+     */
     public function __construct() {
         parent::__construct();
 //        $this->is_logged_in();
@@ -11,6 +24,11 @@ class Init extends CI_Controller {
     }
     
     
+    /**
+     * Init::index()
+     * 
+     * @return
+     */
     public function index(){
     
     }
@@ -102,6 +120,11 @@ class Init extends CI_Controller {
 //    }
 
 
+    /**
+     * Init::exportTransactionExcel()
+     * 
+     * @return
+     */
     public function exportTransactionExcel(){
         $this->excel->setActiveSheetIndex(0);
         //name the worksheet
@@ -164,6 +187,11 @@ class Init extends CI_Controller {
                 $objWriter->save('php://output');
     }
     
+    /**
+     * Init::exportItemExcel()
+     * 
+     * @return
+     */
     public function exportItemExcel(){
         $this->excel->setActiveSheetIndex(0);
         //name the worksheet
@@ -221,6 +249,11 @@ class Init extends CI_Controller {
     
     
     
+    /**
+     * Init::resetData()
+     * 
+     * @return
+     */
     public function resetData(){
          if($this->session->userdata('role') == 'admin'){
             $this->load->view('admin/view_header');
@@ -232,6 +265,11 @@ class Init extends CI_Controller {
          }
     }
     
+    /**
+     * Init::resetTransactionItem()
+     * 
+     * @return
+     */
     public function resetTransactionItem(){
         $password =  $this->input->get_post('password');
         $table =  $this->input->get_post('tabl');
@@ -291,6 +329,7 @@ class Init extends CI_Controller {
             echo'<p class="alert alert-danger"><i class="glyphicon glyphicon-remove"></i>&nbsp;&nbsp;Invalid User</p>';
             exit;
         }
-    }
-   
+    }  
 }
+/* End of file init.php */
+/* Location: ./application/controllers/init.php */

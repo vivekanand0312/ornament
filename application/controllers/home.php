@@ -1,13 +1,32 @@
-    <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Home
+ * 
+ * @package   
+ * @author Vivekanand
+ * @copyright ornament
+ * @version 2016
+ * @access public
+ */
 class Home extends CI_Controller {
 
     
+        /**
+         * Home::__construct()
+         * 
+         * @return
+         */
         function __construct() {
             parent::__construct();
         }
         
         
+         /**
+          * Home::index()
+          * 
+          * @return
+          */
          function index(){
             $this->get_pagination();
             $data['query'] = $this->db->get('item');
@@ -15,8 +34,13 @@ class Home extends CI_Controller {
             $this->load->view('view_home', $data);
             $this->load->view('footer');
             
-	}
+	     }
                 
+        /**
+         * Home::search()
+         * 
+         * @return
+         */
         function search(){
             $s = $this->input->post('s');
             $data['title']='Blog';
@@ -27,6 +51,11 @@ class Home extends CI_Controller {
             $this->load->view('footer');
         }
         
+        /**
+         * Home::reportcard()
+         * 
+         * @return
+         */
         function reportcard(){
             $id = $this->uri->segment(3);
 //          use item variable for show in heading
@@ -48,13 +77,17 @@ class Home extends CI_Controller {
         }
         
         
+        /**
+         * Home::reportPdf()
+         * 
+         * @return
+         */
         function reportPdf(){
             // As PDF creation takes a bit of memory, we're saving the created file in /downloads/reports/
             $pdfFilePath = FCPATH."/downloads/reports/$filename.pdf";
             $data['page_title'] = 'Hello world'; // pass data to the view
 
-            if (file_exists($pdfFilePath) == FALSE)
-            {
+            if (file_exists($pdfFilePath) == FALSE){
                 ini_set('memory_limit','32M'); // boost the memory limit if it's low <img src="http://davidsimpson.me/wp-includes/images/smilies/icon_wink.gif" alt=";)" class="wp-smiley">
                 $html = $this->load->view('pdf_report', $data, true); // render the view into HTML
 
@@ -68,8 +101,12 @@ class Home extends CI_Controller {
             redirect("/downloads/reports/$filename.pdf"); 
         }
                 
-        function get_pagination()
-        {
+        /**
+         * Home::get_pagination()
+         * 
+         * @return
+         */
+        function get_pagination(){
             $config['base_url'] = base_url().'/home/index/';
             
             $config['total_rows'] = $this->db->get('item')->num_rows();
@@ -79,26 +116,21 @@ class Home extends CI_Controller {
             $config['num_links'] = 5;
             
             //appy css on pagination
-            
-//            $config['page_query_string'] = TRUE;
-//            // $config['use_page_numbers'] = TRUE;
-//            $config['query_string_segment'] = 'page';
-
             $config['full_tag_open'] = '<ul class="pagination">';
             $config['full_tag_close'] = '</ul><!--pagination-->';
 
             $config['first_link'] = '&laquo; First';
             $config['first_tag_open'] = '<li class="prev page">';
             $config['first_tag_close'] = '</li>';
-//
+
             $config['last_link'] = 'Last &raquo;';
             $config['last_tag_open'] = '<li class="next page">';
             $config['last_tag_close'] = '</li>';
-//
+
             $config['next_link'] = 'Next &rarr;';
             $config['next_tag_open'] = '<li class="next page">';
             $config['next_tag_close'] = '</li>';
-//
+
             $config['prev_link'] = '&larr; Previous';
             $config['prev_tag_open'] = '<li class="prev page">';
             $config['prev_tag_close'] = '</li>';
@@ -119,5 +151,5 @@ class Home extends CI_Controller {
         }
 }
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
+/* End of file home.php */
+/* Location: ./application/controllers/home.php */

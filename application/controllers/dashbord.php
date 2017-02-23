@@ -1,7 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * Dashbord
+ * 
+ * @package   
+ * @author Vivekanand
+ * @copyright ornament
+ * @version 2016
+ * @access public
+ */
 class Dashbord extends CI_Controller {
     
+    /**
+     * Dashbord::__construct()
+     * 
+     * @return
+     */
     public function __construct() {
         parent::__construct();
         $this->load->model('Dashbord_model');
@@ -9,6 +22,11 @@ class Dashbord extends CI_Controller {
         
     }
     
+    /**
+     * Dashbord::index()
+     * 
+     * @return
+     */
     public function index(){
         $this->is_logged_in();
       //$data['query'] = $this->db->query("SELECT item.`item`, transaction.`id`, transaction.`comment`, transaction.`created` FROM item  RIGHT JOIN TRANSACTION ON item.`id` = transaction.`item-id` LIMIT 0,5");
@@ -21,6 +39,11 @@ class Dashbord extends CI_Controller {
     
 
 
+    /**
+     * Dashbord::is_logged_in()
+     * 
+     * @return
+     */
     public function is_logged_in(){
         
         header("cache-Control: no-store, no-cache, must-revalidate");
@@ -35,6 +58,11 @@ class Dashbord extends CI_Controller {
         }
     }
     
+    /**
+     * Dashbord::add_transaction()
+     * 
+     * @return
+     */
     function add_transaction(){
             
             $this->form_validation->set_rules('item','Item','required');
@@ -61,6 +89,11 @@ class Dashbord extends CI_Controller {
                 
             }
             
+    /**
+     * Dashbord::do_edit()
+     * 
+     * @return
+     */
     function do_edit(){
         
                 $item = $this->input->post('item');
@@ -74,6 +107,11 @@ class Dashbord extends CI_Controller {
 
             }
 
+    /**
+     * Dashbord::edit_entry()
+     * 
+     * @return
+     */
     function edit_entry(){
                $id = $this->uri->segment(3);
                $data['item_val'] = str_replace("%20"," ",$this->uri->segment(4));
@@ -84,16 +122,31 @@ class Dashbord extends CI_Controller {
 
             }
             
+    /**
+     * Dashbord::delete_entry()
+     * 
+     * @return
+     */
     function delete_entry(){
                 $this->Dashbord_model->delete_post($this->input->post('id'));
             }
             
+    /**
+     * Dashbord::searchTransaction()
+     * 
+     * @return
+     */
     function searchTransaction(){
                 $data['query'] = $this->db->get('item');
                 $this->load->view('admin/view_header');
                 $this->load->view('admin/view_searchEntry', $data);
             }
             
+    /**
+     * Dashbord::searchItem()
+     * 
+     * @return
+     */
     function searchItem(){
              $item = $this->input->post('q');
              if(!empty($item)){
@@ -104,6 +157,11 @@ class Dashbord extends CI_Controller {
              }
             }
             
+    /**
+     * Dashbord::searchAdvance()
+     * 
+     * @return
+     */
     function searchAdvance(){
              $from = $this->input->post('from');
              $to = $this->input->post('to');
@@ -116,6 +174,11 @@ class Dashbord extends CI_Controller {
              }
    }
    
+   /**
+    * Dashbord::batchDelete()
+    * 
+    * @return
+    */
    function  batchDelete(){
         if($this->session->userdata('role') == 'admin'){
        
@@ -147,6 +210,11 @@ class Dashbord extends CI_Controller {
    }
    }
    
+   /**
+    * Dashbord::manageUser()
+    * 
+    * @return
+    */
    function manageUser(){
        if($this->session->userdata('role') == 'admin'){
         $data['query'] =  $this->db->get('auth');
@@ -159,6 +227,11 @@ class Dashbord extends CI_Controller {
        }
    }
    
+   /**
+    * Dashbord::delUser()
+    * 
+    * @return
+    */
    function delUser(){
         if($this->session->userdata('role') == 'admin'){
        $id = $this->input->get_post('id');
@@ -180,6 +253,11 @@ class Dashbord extends CI_Controller {
        exit;
    }
    
+   /**
+    * Dashbord::createUser()
+    * 
+    * @return
+    */
    function createUser(){
        if($this->session->userdata('role') == 'admin'){
         $this->form_validation->set_rules('name', 'Username', 'callback_username_check');
@@ -206,6 +284,12 @@ class Dashbord extends CI_Controller {
        }
    }
    
+   /**
+    * Dashbord::username_check()
+    * 
+    * @param mixed $str
+    * @return
+    */
    public function username_check($str){       
                $query =  $this->db->get_where('auth', array('user_name'=>$str));
                
@@ -220,6 +304,12 @@ class Dashbord extends CI_Controller {
 		}
 	}
         
+   /**
+    * Dashbord::email_check()
+    * 
+    * @param mixed $str
+    * @return
+    */
    public function email_check($str){
             $query =  $this->db->get_where('auth', array('user_email'=>$str));
 		if (count($query->result())>0)
@@ -233,6 +323,11 @@ class Dashbord extends CI_Controller {
 		}
     }
     
+    /**
+     * Dashbord::updateUserPass()
+     * 
+     * @return
+     */
     function updateUserPass(){
         if($this->session->userdata('role') == 'admin'){
         $val = sha1($this->input->post('value'));
@@ -247,6 +342,11 @@ class Dashbord extends CI_Controller {
         
     }
     
+    /**
+     * Dashbord::updateUserStstus()
+     * 
+     * @return
+     */
     function updateUserStstus(){
         if($this->session->userdata('role') == 'admin'){
         $val = $this->input->post('value');
@@ -264,6 +364,11 @@ class Dashbord extends CI_Controller {
     
     
     
+    /**
+     * Dashbord::evaluate()
+     * 
+     * @return
+     */
     function evaluate(){
         $rs =  $this->db->get('transaction');
         $operation1 = 0;
@@ -277,5 +382,5 @@ class Dashbord extends CI_Controller {
         echo '<br> Total Weight = '. $operation2 = eval("return($operation2);");
     }
 }
-   
-
+/* End of file dashboard.php */
+/* Location: ./application/controllers/dashboard.php */

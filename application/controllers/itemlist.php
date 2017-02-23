@@ -1,7 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/**
+ * Itemlist
+ * 
+ * @package   
+ * @author Vivekanand
+ * @copyright ornament
+ * @version 2016
+ * @access public
+ */
 class Itemlist extends CI_Controller {
     
+    /**
+     * Itemlist::__construct()
+     * 
+     * @return
+     */
     public function __construct() {
         parent::__construct();
 //        $this->is_logged_in();
@@ -9,6 +22,11 @@ class Itemlist extends CI_Controller {
     }
     
     
+    /**
+     * Itemlist::index()
+     * 
+     * @return
+     */
     public function index(){
        $this->get_pagination();
        $this->db->order_by('item'); 
@@ -17,6 +35,11 @@ class Itemlist extends CI_Controller {
        $this->load->view('admin/view_itemlist', $data);
     }
     
+    /**
+     * Itemlist::is_logged_in()
+     * 
+     * @return
+     */
     public function is_logged_in(){
         header("cache-Control: no-store, no-cache, must-revalidate");
         header("cache-Control: post-check=0, pre-check=0", false);
@@ -30,6 +53,11 @@ class Itemlist extends CI_Controller {
     }
     
     
+    /**
+     * Itemlist::add_item()
+     * 
+     * @return
+     */
     public function add_item(){
             $this->form_validation->set_rules('item','Item value','required|min_length[5]|max_length[30]');
             $this->form_validation->set_rules('comment','Comment data','max_length[500]');
@@ -44,6 +72,11 @@ class Itemlist extends CI_Controller {
             }
     }
             
+    /**
+     * Itemlist::do_edit()
+     * 
+     * @return
+     */
     public function do_edit(){
                 $item = $this->input->post('item');
                 $comment = $this->input->post('comment');
@@ -51,6 +84,11 @@ class Itemlist extends CI_Controller {
                 $this->Itemlist_model->do_edit($comment, $item, $id);
     }
 
+    /**
+     * Itemlist::load_edit_view()
+     * 
+     * @return
+     */
     public function load_edit_view(){
 //              $this->Itemlist_model->load_edit_view($this->input->post('id'));
                 $id = $this->uri->segment(3);
@@ -59,10 +97,20 @@ class Itemlist extends CI_Controller {
                 $this->load->view('admin/view_editItemlist',$data);
     }
             
+    /**
+     * Itemlist::delete_item()
+     * 
+     * @return
+     */
     public function delete_item(){
                 $this->Itemlist_model->delete_item($this->input->post('id'));
     }
             
+    /**
+     * Itemlist::get_pagination()
+     * 
+     * @return
+     */
     public function get_pagination(){
             $config['base_url'] = base_url().'itemlist/index/';
             $config['total_rows'] = $this->db->get('item')->num_rows();
@@ -107,5 +155,5 @@ class Itemlist extends CI_Controller {
             $this->pagination->initialize($config);
     }
 }
-   
-
+/* End of file itemlist.php */
+/* Location: ./application/controllers/itemlist.php */
